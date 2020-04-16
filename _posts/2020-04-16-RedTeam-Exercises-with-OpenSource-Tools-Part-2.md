@@ -20,8 +20,12 @@ I decided to deliver my payload to our vicim using a phishing mail. Lets speak a
 Based on the scheme that I presented below, I will explain how I thought each phase:
 <ol>
 <li>Phase 1 and 2: they are referring to successful delivery the email in the user's inbox. Depending on the type of infrastructure we are targeting, I expect to encounter a mail protection with the ability to detect and eventualy detonate my attachment in a sandbox. We have to take the proper measures to avoid being detected by a security gateway and in case we are, then we should make sure to not start the execution process in the analysis machine. In case I am flagged by a security protection I will have to remake my payload.</li> 
-<li>Phase 3: it implies our social engineering skills where I have to make the user to enable the macro or execute it through a tricky mechanism (macro in excel fields). Since Microsoft Office is the most used email client, I will focus only on its security protections which apply to other email clients too. Microsoft has developed a sandbox mode which is a security feature that prevents access from running certain expressions that could be unsafe. I risk at this step not to running my macros because I didn't convince the user enough to trigger macros or because of Office's protections. </li>
-<li>Phase 4:</li>
+<li>Phase 3: it implies our social engineering skills. I have to make the user to enable the macro or execute it through a tricky mechanism (macro in excel fields). Since Microsoft Office is the most used email client, I will focus only on its security protections which apply to other email clients too. Microsoft has developed a sandbox mode which is a security feature that prevents access from running certain expressions that could be unsafe. I risk at this step not to running my macros because I didn't convince the user enough to trigger macros or because of Office's protections. </li>
+<li>Phase 4: If I made the user to enable the macros or to do whatever method I thought to execute it in background, my script will check if it is running in a sandbox and in case it does, then it will stop the execution. The VBs script beside the sandbox checkings, it contains the code for loading the dropper in memory. As a process tree, it will look like the following: "Office" process -> VBs interpreter -> Powershell.
+ 
+ 
+ 
+ As soon as the user enable the macros and it executes the vbs script, the "Office" process will spawn a process with the vbs interpreter. Our vbs script does nothing more than checking it is not running in a virtual machine and in case it does not, then it follows with spawning a shell scripting process, in our case it will be a "powershell process" which will contains an in memory download command. </li>
 <li>Phase 5:</li>  
 
 <li>Phase 7:</li>  
