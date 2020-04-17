@@ -7,8 +7,7 @@ category: blog
 ---
 
 Hello again :).<br/> 
-In the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article, I showed you few ways for bypassing the Windows Defender and AMSI rules.
-Now it is time to learn new things and to apply what we learnt in the first part. <br/>
+It is time to learn new things and to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article where I showed few ways for bypassing the Windows Defender and the AMSI rules. <br/>
 
 ## Contents
 * [Introduction](#shortintro)
