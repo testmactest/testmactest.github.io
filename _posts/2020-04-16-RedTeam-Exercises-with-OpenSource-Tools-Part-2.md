@@ -33,7 +33,7 @@ Lets speak a bit about how our phishing mail from the 2nd scenario will look, ho
 <li>Phase 7,8,9,10: The stager 0 is the launcher, the part that I had to obfuscate it. If it is successfully run, it will reach the Empire server, the C2 server will respond with the "stage 1" that does all of my key negotiation and finally it loads the Empire agent that enables all of my command and control functionalities. If you prefer, you can take a look at the scheme of how Empire agents are working <a href="https://testmactest.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1#howdoimakeuseofopensource" style="text-decoration: none;">here</a></li>
 </ul>
 
-All of the above phases are finding in the below scheme. The first scenario will use the same steps from dropper on. I have split my testing work in half: one for testing the stager's capabilities of not being detected and other for testing and developing a way to bypass the Office's sandbox mode or a security gateway. 
+All of the above phases are finding in the below scheme. The first scenario will use the same steps from dropper. I have split my testing work in half: one for testing the stager's capabilities for not being detected and other for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/arhitecturef.png">
  </center>
