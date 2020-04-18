@@ -7,11 +7,11 @@ category: blog
 ---
 
 Hello again :).<br/> 
-It is been more than I anticipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have improved the evasion capabilities of Empire's stager. However Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
+It took me more than I ancipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have made Empire's stager undetectable. Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
 ## Contents
-* [Introduction](#shortintro)
-
-## Introduction {#shortintro}
+* [What is my strategy](#shortintro)
+* [Scenario 1](#scenario1)
+## What is my strategy? {#shortintro}
 
 I finished the first part promising that I will apply the theory on some real world cases. Without other words let's see what scenarios I will approach:
 <ol>
@@ -32,11 +32,15 @@ Lets speak a bit about how our phishing mail from the 2nd scenario will look, ho
 <li>Phase 7,8,9,10: The stager 0 is the launcher, the part that I had to obfuscate it. If it is successfully run, it will reach the Empire server, the C2 server will respond with the "stage 1" that does all of my key negotiation and finally it loads the Empire agent that enables all of my command and control functionalities. If you prefer, you can take a look at the scheme of how Empire agents are working <a href="https://testmactest.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1#howdoimakeuseofopensource" style="text-decoration: none;">here</a></li>
 </ul>
 
-All of the mentioned phases are finding in the below scheme. The first scenario will use and continue the same steps from "dropper" phase. I divided my testing work in half: one for testing the stager's evasion capabilities for not being detected and the second part for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
+All of the mentioned phases are finding in the below scheme. [The first scenario will use the same steps from "dropper" phase]?????. 
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/arhitecturef.png">
  </center>
 </div>
+
+In order to bypass Windows Defender and AMSI rules, I divided my testing work in half: one for testing the stager's evasion capabilities for not being detected and the second part for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
+
+## Scenario 1{#scenario1}
 
 References:<br/>
 https://support.office.com/en-us/article/Turn-sandbox-mode-on-or-off-to-disable-macros-8CC7BAD8-38C2-4A7A-A604-43E9A7BBC4FB
