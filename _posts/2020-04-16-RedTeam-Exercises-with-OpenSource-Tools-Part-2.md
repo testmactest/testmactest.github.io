@@ -7,8 +7,7 @@ category: blog
 ---
 
 Hello again :).<br/> 
-It is time to learn new things and to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article where I showed few ways for bypassing the Windows Defender and the AMSI rules. <br/>
-
+It is been more than I anticipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have improved the evasion capabilities of Empire's stager. However Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
 ## Contents
 * [Introduction](#shortintro)
 
@@ -16,8 +15,8 @@ It is time to learn new things and to apply what we learnt in the first <a href=
 
 I finished the first part promising that I will apply the theory on some real world cases. Without other words let's see what scenarios I will approach:
 <ol>
-<li>Scenario 1: I will consider I obtained somehow access in the network via an service exploit, web application vulnerability or through a phishing email. I will explore some ways of upgrading the shell without being detected by WindowsDefender.</li>
- <li>Scenario 2: I was speaking about a RedTeam exercise in my first article, am I right? What RedTeam Exercise is that where I don't make use of a little phishing mail? </li>
+<li>Scenario 1: I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email. I will explore some ways of upgrading the dumb shell without being detected by WindowsDefender.</li>
+ <li>Scenario 2: I was speaking about a RedTeam exercise in my first article, am I right? What RedTeam Exercise is that where I don't make use of a little phishing mail? I will build from 0 a phishing email where I will explore anti-sandbox techniques.</li>
 </ol>
 
 I considered that we all encountered situations where we were limited by a dumb shell and we could not upgrade it because of not taking all the necessary measures against a security sollution. Also I personally, I found myself in the situation where only through a phishing email I could access the target's network.<br/>
@@ -33,7 +32,7 @@ Lets speak a bit about how our phishing mail from the 2nd scenario will look, ho
 <li>Phase 7,8,9,10: The stager 0 is the launcher, the part that I had to obfuscate it. If it is successfully run, it will reach the Empire server, the C2 server will respond with the "stage 1" that does all of my key negotiation and finally it loads the Empire agent that enables all of my command and control functionalities. If you prefer, you can take a look at the scheme of how Empire agents are working <a href="https://testmactest.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1#howdoimakeuseofopensource" style="text-decoration: none;">here</a></li>
 </ul>
 
-All of the above phases are finding in the below scheme. The first scenario will use the same steps from dropper. I have split my testing work in half: one for testing the stager's capabilities for not being detected and other for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
+All of the mentioned phases are finding in the below scheme. The first scenario will use and continue the same steps from "dropper" phase. I divided my testing work in half: one for testing the stager's evasion capabilities for not being detected and the second part for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/arhitecturef.png">
  </center>
