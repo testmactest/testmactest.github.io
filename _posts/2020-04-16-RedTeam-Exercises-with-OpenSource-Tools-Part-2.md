@@ -46,13 +46,17 @@ In order to bypass Windows Defender and AMSI rules, I divided my testing work in
 I will not show all the tests that I did in order to observe and analyze Windwos Defender and AMSI rules. In my examples, I am using multi/launcher stager.<br/>
 In the first scenario I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email.<br/>
 
-As I said in the first part, if you are using Empire as default, it will be catched by Windows Defender. It can not pass the system protections so obfuscation or changes are needed.
+As I said in the first part, if you are using Empire with default config, it will be catched by Windows Defender. It can not pass the system protections so obfuscation or changes are needed.
 Even if Empire framework is coming with a lot of obfuscation methods or evasion capabilities, Microsoft created a set of signatures based on Empire's stagers behavior, strings, stager's code, and so on. 
 
 In my tests, I observed that the following patterns are flagged:<br/>
 <b>1. SafeChecks:</b><br/>
-The stager is coming with SafeChecks enabled by default.
-
+The stager is coming with SafeChecks enabled by default. Taking a look at what is doing SafeChecks, I observed it is checking if the powershell verison is great or equal with 3. This can be used as a part of a more complex rule for detecting the Empire. It is recommended to disable it.
+<div>
+<center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/powershellversion.png">
+ </center>
+</div>
+<br/>
 
 Finally, any of the \all options in Invoke-Obfuscation is likely to get caught try using a custom combination of the sub options.
 
