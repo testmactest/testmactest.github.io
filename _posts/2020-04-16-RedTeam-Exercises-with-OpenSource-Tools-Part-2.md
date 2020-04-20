@@ -8,16 +8,18 @@ category: blog
 
 Hello again :).<br/> 
 It took me more than I ancipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have made Empire's stager undetectable. Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
+
 ## Contents
 * [What is my strategy](#shortintro)
 * [Scenario 1](#scenario1)
+
 ## What is my strategy? {#shortintro}
 
 I finished the first part promising that I will apply the theory on some real world cases. Without other words let's see what scenarios I will approach:
-<ol>
+<ul>
 <li>Scenario 1: I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email. I will explore some ways of upgrading the dumb shell without being detected by WindowsDefender.</li>
  <li>Scenario 2: I was speaking about a RedTeam exercise in my first article, am I right? What RedTeam Exercise is that where I don't make use of a little phishing mail? I will build from 0 a phishing email where I will explore anti-sandbox techniques.</li>
-</ol>
+</ul>
 
 I considered that we all encountered situations where we were limited by a dumb shell and we could not upgrade it because of not taking all the necessary measures against a security sollution. Also I personally, I found myself in the situation where only through a phishing email I could access the target's network.<br/>
 I wanted to develop a simple malware that will use the multi stager feature of the Empire framework. I want from start that all what I will present, fits on the real world scenarios.<br/>
@@ -42,7 +44,7 @@ If you are wondering where is the scheme for the first scenario, I am answering 
 
 In order to bypass Windows Defender and AMSI rules, I divided my testing work in half: one for testing the stager's evasion capabilities for not being detected and the second part for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
 
-## Scenario 1{#scenario1}
+## Scenario 1 {#scenario1}
 I will not show all the tests that I did in order to observe and analyze Windwos Defender and AMSI rules. In my examples, I am using multi/launcher stager.<br/>
 In the first scenario I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email.<br/>
 
@@ -59,7 +61,7 @@ The stager is coming with SafeChecks enabled by default. Taking a look at what i
 </div>
 <br/>
 
-<b> 2. Update the payloads to deal with new signatures:</b><br/>
+<b>2. Rules based on the order of the code's postion:</b><br/>
 BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165928757800965" style="text-decoration: none;">6 April 2020</a> that they updated their HTTP listener to evade Windows Defender again. I was curious and took a look on their <a href="https://github.com/BC-SECURITY/Empire/pull/148/commits/3bc0eb6e435f39981092ed823da623e22146d2bc" style="text-decoration: none;">commit</a> on their Github repo to see what changes they did.
 
 <div>
@@ -71,7 +73,7 @@ BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165
  As I suspected, the order of functions is a really big way that AMSI is fingerprinting now. So to bypass AMSI, we just have to reorder those commands who are idependent.<br/> 
  You can move a number of independent position commands to break the Microsoft's signatures.
 
-<b> 3. ObfuscateCommand:</b><br/>
+<b>3. Default Obfuscation:</b><br/>
 Empire is using as default the "Token\All\1" obfuscation. I observed in my tests that any of the \all options in Invoke-Obfuscation is likely to get caught. Try using a custom combination of the sub options.<br/>
 In my tests I used the following list: again you can use any custom combination you prefer, just do not break the limit of 8191 characters that Powershell interpreter is accepting.
 {% highlight powershell %}
@@ -84,6 +86,21 @@ set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1
 set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1
 
 {% endhighlight %}
+
+<b>4. Suspicious key words<b><br/>
+It is well known that some powershell arguments were abused in the last years ... If you are working as a blue teamer, I am pretty sure you know which are these "widely used" arguments in attacks:
+
+<ul>
+ <li>NoProfile – indicates that the current user’s profile setup script should not be executed when the PowerShell engine starts.</li>
+  <li>NonI – shorthand for -NonInteractive, meaning an interactive prompt to the user will not be presented.</li> 
+ <li>W Hidden – shorthand for “-WindowStyle Hidden”, which indicates that the PowerShell session window should be started in a hidden manner.</li> 
+ <li>Exec Bypass – shorthand for “-ExecutionPolicy Bypass”, which disables the execution policy for the current PowerShell session (default disallows execution). It should be noted that the Execution Policy isn’t meant to be a security boundary.</li> 
+ <li>encodedcommand – indicates the following chunk of text is a base64 encoded command.</li> 
+ </ul>
+
+Empire's stager (multi/launcher) is coming with encodedcommand enabled as default. Besides this, the empire's listeners (HTTP listener) is using 
+Turn base64 off. It doesn't add anything to your obfuscation while trying to avoid defender. It's really just used because it's the easiest way to handle sending the command in a string. Once you have your obfuscated code you can re-encode it if you really want to use this method.
+
 
 
 References:<br/>
