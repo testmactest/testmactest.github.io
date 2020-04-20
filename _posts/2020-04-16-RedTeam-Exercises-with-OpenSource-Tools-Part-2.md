@@ -59,8 +59,6 @@ The stager is coming with SafeChecks enabled by default. Taking a look at what i
 </div>
 <br/>
 
-Finally, any of the \all options in Invoke-Obfuscation is likely to get caught try using a custom combination of the sub options.
-
 <b> 2. Update the payloads to deal with new signatures:</b><br/>
 BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165928757800965" style="text-decoration: none;">6 April 2020</a> that they updated their HTTP listener to evade Windows Defender again. I was curious and took a look on their <a href="https://github.com/BC-SECURITY/Empire/pull/148/commits/3bc0eb6e435f39981092ed823da623e22146d2bc" style="text-decoration: none;">commit</a> on their Github repo to see what changes they did.
 
@@ -72,10 +70,12 @@ BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165
  
  As I suspected, the order of functions is a really big way that AMSI is fingerprinting now. So to bypass AMSI, we just have to reorder those commands who are idependent.<br/> 
  You can move a number of independent position commands to break the Microsoft's signatures.
- 
- 
 
+<b> 3. ObfuscateCommand:</b><br/>
+Empire is using as default the "Token\All\1" obfuscation. From my tests, I observed that any of the \all options in Invoke-Obfuscation is likely to get caught. Try using a custom combination of the sub options.
+In my tests I used the following list: again you can use any custom combination you prefer, just do not break the limit of 8192 characters that Powershell is accepting :D.
 
+{% highlight powershell %}
 set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1
 set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1
 set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1
@@ -97,6 +97,9 @@ set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compres
 set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, LAUNCHER\RUNDLL\0
 set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
 set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
+
+{% endhighlight %}
+
 
 References:<br/>
 https://support.office.com/en-us/article/Turn-sandbox-mode-on-or-off-to-disable-macros-8CC7BAD8-38C2-4A7A-A604-43E9A7BBC4FB
