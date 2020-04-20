@@ -50,8 +50,9 @@ As I said in the first part, if you are using Empire with default config, it wil
 Even if Empire framework is coming with a lot of obfuscation methods or evasion capabilities, Microsoft created a set of signatures based on Empire's stagers behavior, strings, stager's code, and so on. 
 
 In my tests, I observed that the following patterns are flagged:<br/>
+
 <b>1. SafeChecks:</b><br/>
-The stager is coming with SafeChecks enabled by default. Taking a look at what is doing SafeChecks, I observed it is checking if the powershell verison is great or equal with 3. This can be used as a part of a more complex rule for detecting the Empire. It is recommended to disable it.
+The stager is coming with SafeChecks enabled by default. Taking a look at what is doing SafeChecks, I observed it is checking if the powershell verison is great or equal with 3. This can be used as a part of a more complex rule for detecting the Empire. I recommend to disable it.
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/powershellversion.png">
  </center>
@@ -60,7 +61,19 @@ The stager is coming with SafeChecks enabled by default. Taking a look at what i
 
 Finally, any of the \all options in Invoke-Obfuscation is likely to get caught try using a custom combination of the sub options.
 
+<b> 2. Update the payloads to deal with new signatures:</b><br/>
+BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165928757800965" style="text-decoration: none;">6 April 2020</a> that they updated their HTTP listener to evade Windows Defender again. I was curious and took a look on their <a href="https://github.com/BC-SECURITY/Empire/pull/148/commits/3bc0eb6e435f39981092ed823da623e22146d2bc" style="text-decoration: none;">commit</a> on their Github repo to see what changes they did.
 
+<div>
+<center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/httpevader.png">
+ </center>
+</div>
+<br/>
+ 
+ As I suspected, the order of functions is a really big way that AMSI is fingerprinting now. So to bypass AMSI, we just have to reorder those commands who are idependent.<br/> 
+ You can move a number of independent position commands to break the Microsoft's signatures.
+ 
+ 
 
 
 set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1
