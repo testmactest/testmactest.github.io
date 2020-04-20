@@ -72,9 +72,8 @@ BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165
  You can move a number of independent position commands to break the Microsoft's signatures.
 
 <b> 3. ObfuscateCommand:</b><br/>
-Empire is using as default the "Token\All\1" obfuscation. From my tests, I observed that any of the \all options in Invoke-Obfuscation is likely to get caught. Try using a custom combination of the sub options.
-In my tests I used the following list: again you can use any custom combination you prefer, just do not break the limit of 8192 characters that Powershell is accepting :D.
-
+Empire is using as default the "Token\All\1" obfuscation. I observed in my tests that any of the \all options in Invoke-Obfuscation is likely to get caught. Try using a custom combination of the sub options.<br/>
+In my tests I used the following list: again you can use any custom combination you prefer, just do not break the limit of 8191 characters that Powershell interpreter is accepting.
 {% highlight powershell %}
 set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1
 set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1
@@ -83,20 +82,6 @@ set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compres
 set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1
 set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1
 set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1
-set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, LAUNCHER\WMIC\0
-set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1, LAUNCHER\WMIC\0
-set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\WMIC\0
-set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, Token\Variable\1, LAUNCHER\WMIC\0
-set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, LAUNCHER\WMIC\0
-set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, LAUNCHER\WMIC\0
-set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\WMIC\0
-set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, LAUNCHER\RUNDLL\0
-set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1, Compress\1, LAUNCHER\RUNDLL\0
-set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
-set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, Token\Variable\1, LAUNCHER\RUNDLL\0
-set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, Token\Whitespace\1,1,1, LAUNCHER\RUNDLL\0
-set ObfuscateCommand Token\String\1,1,2,1, Token\Variable\1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
-set ObfuscateCommand Token\String\1,1,2,1, Encoding\2, Compress\1, LAUNCHER\RUNDLL\0
 
 {% endhighlight %}
 
