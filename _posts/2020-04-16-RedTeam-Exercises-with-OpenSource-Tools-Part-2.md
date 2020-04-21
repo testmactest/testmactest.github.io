@@ -104,7 +104,6 @@ Empire's stager (multi/launcher) is coming with encodedcommand enabled as defaul
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/launcher.png">
  </center>
 </div>
-<br/>
 
 I recommend to turn base64 off. It doesn't add anything to your obfuscation while trying to avoid Defender. It's really just used because it's the easiest way to handle sending the command in a string. Once you have your obfuscated code you can re-encode it if you really want to use this method. <br/>
 Most security related solutions created features for detecting base64 encoded strings and analyzing them after the content is decoded. CarbonBlack, FireEye made public their sollutions' capabilities in the past, being clear for us that the above arguments are using as a part of their detection rules: you can read more <a href="https://www.carbonblack.com/2015/08/14/how-to-detect-powershell-empire-with-carbon-black/" style="text-decoration: none;">here</a> and <a href="https://www.fireeye.com/blog/threat-research/2018/07/malicious-powershell-detection-via-machine-learning.html" style="text-decoration: none;">here</a>.  
