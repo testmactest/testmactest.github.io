@@ -12,6 +12,7 @@ It took me more than I ancipated for writing the second part. The guys from BC-S
 ## Contents
 * [Intro scenarios](#shortintro)
 * [Scenario 1](#scenario1)
+* [Scenario 2](#scenario2)
 
 ## Intro scenarios {#shortintro}
 
@@ -118,8 +119,16 @@ I invite you to take a look on it in case you are interested in using the downlo
  </center>
 </div>
 
-<br/> Now it is the time for what you all wanting to see. D
+<br/> Now it is the time for what you all wanting to see.
+
 <b> Demo </b><br/>
+My tests are done on an up-to-date Windows Pro OS with Windows Defender enabled. (all of the updates were done before filming the video - 21 April 2020).
+<iframe width="520" height="400" src="https://youtu.be/bPnt3d7igX8">
+</iframe>
+
+## Scenario 2 {#scenario2}
+
+
 
 
 References:<br/>
