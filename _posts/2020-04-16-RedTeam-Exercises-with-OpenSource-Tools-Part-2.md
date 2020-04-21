@@ -10,10 +10,10 @@ Hello again :).<br/>
 It took me more than I ancipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have made Empire's stager undetectable. Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
 
 ## Contents
-* [What is my strategy](#shortintro)
+* [Intro scenarios](#shortintro)
 * [Scenario 1](#scenario1)
 
-## What is my strategy? {#shortintro}
+## Intro scenarios {#shortintro}
 
 I finished the first part promising that I will apply the theory on some real world cases. Without other words let's see what scenarios I will approach:
 <ul>
@@ -87,7 +87,7 @@ set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1
 
 {% endhighlight %}
 
-<b>4. Suspicious key words<b><br/>
+<b>4. Suspicious key words</b><br/>
 It is well known that some powershell arguments were abused in the last years ... If you are working as a blue teamer, I am pretty sure you know which are these "widely used" arguments in attacks:
 
 <ul>
@@ -98,7 +98,7 @@ It is well known that some powershell arguments were abused in the last years ..
  <li>encodedcommand – indicates the following chunk of text is a base64 encoded command.</li> 
  </ul>
 
-Empire's stager (multi/launcher) is coming with encodedcommand enabled as default. Besides this, the empire's listeners (HTTP listener) is using all of the above arguments. When they are used together, most likely there is something suspicious. Most security related solutions created features for detecting base64 encoded strings and analyzing them after the content was decoded.
+Empire's stager (multi/launcher) is coming with encodedcommand enabled as default. Besides this, the empire's listeners (HTTP listener) is using all of the above arguments as part of the launcher syntax. When they are used together, most likely there is something suspicious.
 
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/launcher.png">
@@ -106,9 +106,12 @@ Empire's stager (multi/launcher) is coming with encodedcommand enabled as defaul
 </div>
 <br/>
 
-I recommend to turn base64 off. It doesn't add anything to your obfuscation while trying to avoid defender. It's really just used because it's the easiest way to handle sending the command in a string. Once you have your obfuscated code you can re-encode it if you really want to use this method. <br/>
-CarbonBlack, FireEye made public few in the past, of their sollutions' capabilities: you can read them <a href="https://www.carbonblack.com/2015/08/14/how-to-detect-powershell-empire-with-carbon-black/" style="text-decoration: none;">here</a> and <a href="https://www.fireeye.com/blog/threat-research/2018/07/malicious-powershell-detection-via-machine-learning.html" style="text-decoration: none;">here</a>.  
+I recommend to turn base64 off. It doesn't add anything to your obfuscation while trying to avoid Defender. It's really just used because it's the easiest way to handle sending the command in a string. Once you have your obfuscated code you can re-encode it if you really want to use this method. <br/>
+Most security related solutions created features for detecting base64 encoded strings and analyzing them after the content is decoded. CarbonBlack, FireEye made public their sollutions' capabilities in the past, being clear for us that the above arguments are using as a part of their detection rules: you can read more <a href="https://www.carbonblack.com/2015/08/14/how-to-detect-powershell-empire-with-carbon-black/" style="text-decoration: none;">here</a> and <a href="https://www.fireeye.com/blog/threat-research/2018/07/malicious-powershell-detection-via-machine-learning.html" style="text-decoration: none;">here</a>.  
 
+<br/>Now that I identified almost all the patterns that are triggering the Microsoft's signatures, let's speak about the dropper before starting with the demo.
+
+<b> Demo </b><br/>
 
 
 References:<br/>
