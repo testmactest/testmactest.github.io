@@ -143,16 +143,24 @@ What is a Sandbox? It is a software created environment that isolates and limits
 As we saw earlier, obfuscating code to break signatures can be relatively trivial. AntiMalware or AntiVirus solutions would need an almost unlimited number of signatures. Also heavily obfuscated code can make it almost impossible for human analysis to be effective. Behavior analysis appeared as a solution to this problem. <br/>
 This seems to be the perfect way for identifing those suspicious files which can not be analyzed static. However all sandbox has limitations which again, it is in our advantage:
 <ul>
- <li>Sandboxes use a lot of resources which can be expensive. Just try to run few instances of Cuckoo Sandbox in parallel. </li>
+ <li>Sandboxes use a lot of resources which can be expensive. Just try to run few instances of Cuckoo Sandbox in parallel and you will see what I am talking about. </li>
   <li>End users do not want to wait to receive their messages. </li>
  <li>Email scanning requires thousands of attachments to be evaluated constantly. </li>
 </ul>
 
 These limitations help us with several means to try and detect or evade them:
-<ul><li>Time delays.</li> 
+<ul><li>Time delays. Email filters have a limited amount of time to scan files so delay it until the scan is completed. This is less practical in a macro as it will keep the document open until done waiting.</li> 
  <li>Auto open vs close.</li>
-<li>Password protection.</li>
-<li> Check for limited resources (small amount of rams, single core, etc.).</li>
+<li>Password protection. The sandbox does not know the password and therefore can not open the file. No results are found so the file is sent to the user's inbox. However it has a lower success rate. We have to make the user to find it legit.</li>
+<li> Check for limited resources (small amount of rams, single core, etc.). Using WMI Objects you can enumerate the hardware and system configurations. Some malware looks for things  like the presence of a fan. WMI objects are very inconsistenly implemented by manufactures.
+ {% highlight powershell %}
+Get-WmiObject win32_fan
+Get-WmiObject win32_ComputerSystem
+Get-WmiObject win32_LogicalDisk
+Get-WmiObject win32_videocontroller
+
+{% endhighlight %}
+</li>
  <li> Look for virtualization processes (sandboxie, Vmware tools).</li> 
 </ul>
 
