@@ -161,10 +161,16 @@ Get-WmiObject win32_videocontroller
 
 {% endhighlight %}
 </li>
- <li> Look for virtualization processes (sandboxie, Vmware tools).</li> 
+ <li> Look for virtualization processes (sandboxie, Vmware tools).
+Some processes to look for: Vmtools, VBoxService, Sbiesvc, SbieCtrl
+{% highlight powershell %}
+ Get-WmiObject win32_process
+ 
+{% endhighlight %}
+</li> 
 </ul>
 
-
+However all of the mentioned tips will not guarantee to work. Try to learn as much as possible about your target. Check attack.mitre.org to look for new techqniques if the old ones fail. Use multiple conditions.
 
 
 
