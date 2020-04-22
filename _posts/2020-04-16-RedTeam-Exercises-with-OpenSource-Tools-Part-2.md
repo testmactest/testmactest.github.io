@@ -135,8 +135,23 @@ As you could see, Microsoft didn't know what hit it.
 A word before starting: I could not get an Office license for testing my phishing mail against Office's sandbox mode. I'am using ThunderBird client connected to a testing Gmail account in my test.<br/>
 I have decided because of this inconvenience, to make one more article focused only on phishing mails. I promise that I will use Office as mail client next time. Also I will explore more examples of making use of phishing emails besides the example that I will show you in this part, each of them being fully undetectable. When I say examples, I am reffering at making use of Object Linking and Embedding (OLE) Object , HTML Application (HTA), scenarios where I am hosting a .docx.jar or .docx.exe file in a cloud platform, and many more. Sorry again for the inconvenience.
 
-This being said, let's start. In this example I will send a phishing mail with my CV to a fictive HR person. Because I have written my CV in "LibreOffice Writter", some of my text is not visible so enabling the macro for fully viewing my resume is needing. This would be the main idea of the text body, does it seems legit? Do I raise any suspicion?
+This being said, let's start. In this example I will send a phishing mail with my CV to a fictive HR person. Because I have written my CV in "LibreOffice Writter", some of my text is not visible so it is needed to enable the macro for fully viewing my resume. This would be the main idea of the message from mail's body; does it seems legit? Do I raise any suspicion?<br/>
+The majority of my clients were using a gateway protection so let's take a look at how to make sure our email is not flagged as malicious or suspicious.
 
+### Sandbox Detection and Evasion
+What is a Sandbox? It is a software created environment that isolates and limits the rights and accesses of a process being executed. This is an efficient way of doing behavioral analysis for AntiMalware/AntiVirus sollutions. <br/>
+As we saw earlier, obfuscating code to break signatures can be relatively trivial. AntiMalware or AntiVirus solutions would need an almost unlimited number of signatures. Also heavily obfuscated code can make it almost impossible for human analysis to be effective. Behavior analysis appeared as a solution to this problem. <br/>
+This seems to be the perfect way for identifing those suspicious files which can not be analyzed static. However all sandbox has limitations which again, it is in our advantage:
+<ul>
+ <li>Sandboxes use a lot of resources which can be expensive. Just try to run few instances of Cuckoo Sandbox in parallel. </li>
+  <li>End users do not want to wait to receive their messages. </li>
+ <li>Email scanning requires thousands of attachments to be evaluated constantly. </li>
+</ul>
 
+These limitations help us with several means to try and detect or evade them:
+<ul><li>Time delays.</li> 
+ <li>Auto open vs close</li>
+<li>Password protection<li>
+</ul>
 References:<br/>
 https://support.office.com/en-us/article/Turn-sandbox-mode-on-or-off-to-disable-macros-8CC7BAD8-38C2-4A7A-A604-43E9A7BBC4FB
