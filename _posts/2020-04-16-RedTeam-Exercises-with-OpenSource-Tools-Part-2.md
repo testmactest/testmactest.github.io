@@ -132,8 +132,10 @@ My tests are done on an up-to-date Windows Pro OS with Windows Defender enabled.
 As you could see, Microsoft didn't know what hit it.
 
 ## Scenario 2 {#scenario2}
+A word before starting: I could not get an Office license for testing my phishing mail against Office's sandbox mode. I'am using ThunderBird client connected to a testing Gmail account in my test.<br/>
+I have decided because of this inconvenience, to make one more article focused only on phishing mails. I promise that I will use Office as mail client next time. Also I will explore more examples of making use of phishing emails besides the example that I will show you in this part, each of them being fully undetectable. When I say examples, I am reffering at making use of Object Linking and Embedding (OLE) Object , HTML Application (HTA), scenarios where I am hosting a .docx.jar or .docx.exe file in a cloud platform, and many more. Sorry again for the inconvenience.
 
-
+This being said, let's start. In this example I will send a phishing mail with my CV to a fictive HR person. Because I have written my CV in "LibreOffice Writter", some of my text is not visible so enabling the macro for fully viewing my resume is needing. This would be the main idea of the text body, does it seems legit? Do I raise any suspicion?
 
 
 References:<br/>
