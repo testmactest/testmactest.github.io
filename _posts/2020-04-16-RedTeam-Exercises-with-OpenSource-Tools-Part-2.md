@@ -150,8 +150,19 @@ This seems to be the perfect way for identifing those suspicious files which can
 
 These limitations help us with several means to try and detect or evade them:
 <ul><li>Time delays.</li> 
- <li>Auto open vs close</li>
-<li>Password protection<li>
+ <li>Auto open vs close.</li>
+<li>Password protection.</li>
+<li> Check for limited resources (small amount of rams, single core, etc.).</li>
+ <li> Look for virtualization processes (sandboxie, Vmware tools).</li> 
 </ul>
+
+
+
+
+
+
+
+
+
 References:<br/>
 https://support.office.com/en-us/article/Turn-sandbox-mode-on-or-off-to-disable-macros-8CC7BAD8-38C2-4A7A-A604-43E9A7BBC4FB
