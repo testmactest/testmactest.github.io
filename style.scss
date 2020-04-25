@@ -200,12 +200,14 @@ img {
 
 
 .general-page {
- position: absolute;
- left:0px;
- right: 70%;
- top:0;
- bottom:0;
- overflow: hidden;
+//  position: absolute;
+//  left:0px;
+//  right: 70%;
+//  top:0;
+//  bottom:0;
+//  overflow: hidden;
+  width: 400px;
+  height: 400px;
 }
 
 .wrapper-masthead {
