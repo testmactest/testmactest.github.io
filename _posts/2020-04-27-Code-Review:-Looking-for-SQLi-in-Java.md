@@ -2,7 +2,7 @@
 title: Code Review: Searching for SQLi vulnerabilities in Java
 author: WHmacmac
 layout: post
-permalink: Code_Review:_Searching_for_SQLi_vulnerabilities_in_Java
+permalink: Code_Review_Searching_for_SQLi_vulnerabilities_in_Java
 category: blog
 ---
 
@@ -25,13 +25,14 @@ There are a wide variety of SQLi techniques, attacks, vulnerabilities which can 
 <li>Blind SQLi, where the results of a query you contorl, are not returned or displayed in the application's responses.</li>
 <li>Examining the database.</li>
 <li>Union attacks</li>
+</ul>
 
 SQLi vulnerabilities can in principle occur at any location within a query and in different query types. Most of us probably found SQLi within a WHERE clause of a SELECT query.<br/>
 The most common other locations where a SQLi can occur are:
 
 <ul>
 <li>In SELECT statements, within the table or column name.</li>
- <li>In SELECT statements, within the ORDER BY clause.</li>
+<li>In SELECT statements, within the ORDER BY clause.</li>
 <li>In INSERT statements, within the inserted values.</li>
 <li>In UPDATE statements, within the updated values or the WHERE clause.</li>
 </ul>
