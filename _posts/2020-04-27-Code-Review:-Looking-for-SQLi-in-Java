@@ -1,8 +1,8 @@
 ---
-title: Code Review: Looking for SQLi in Java
+title: Code Review: Searching for SQLi vulnerabilities in Java
 author: WHmacmac
 layout: post
-permalink: Code_Review:_Looking_for_SQLi_in_Java
+permalink: Code_Review:_Searching_for_SQLi_vulnerabilities_in_Java
 category: blog
 ---
 
@@ -31,3 +31,10 @@ There are cases where the application takes the user's input and store it for a 
 This is usually done by storing the input into a database, no vulnerability arises at the point where the data is stored. The stored SQLi vulnerabilities are hard to be detected through interactive analysis.
 
 Many are thinking that today frameworks can resolve all the SQLi injection vulnerabilities, but this is wrong. Many are using SQL query and connections with the databases in a wrong manner. In what will follow, I will present some examples of how to detect SQLi in Java code and how to correctly write it.
+    
+## Contents
+* [Java Persistence API (JPA)](#jpa)
+* [PreparedStatement](#preparedstatement)
+* [CallableStatement](#callablestatement)
+* [Hibernate](#hibernate)
+* [MyBatis](#mybatis)
