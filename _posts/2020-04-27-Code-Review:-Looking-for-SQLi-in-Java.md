@@ -8,7 +8,15 @@ category: blog
 
 Why do we need code review when we can interact with the target and finding if it is vulnerable? After all the response's behavior should help us finding if something is not configured properly. Based on the attack, there are cases where we will not can deduce so easily if we are vulnerable or not. Making code review can help us finding what the interactive analysis misses.
 
-##Introduction
+## Contents
+* [Introduction](#introduction)
+* [Java Persistence API (JPA)](#jpa)
+* [Hibernate](#hibernate)
+* [PreparedStatement](#preparedstatement)
+* [CallableStatement](#callablestatement)
+* [MyBatis](#mybatis)
+
+## Introduction {#introduction}
 
 There are a wide variety of SQLi techniques, attacks, vulnerabilities which can occur in different situations. Some of them include:
 <ul>
@@ -20,6 +28,7 @@ There are a wide variety of SQLi techniques, attacks, vulnerabilities which can 
 
 SQLi vulnerabilities can in principle occur at any location within a query and in different query types. Most of us probably found SQLi within a WHERE clause of a SELECT query.<br/>
 The most common other locations where a SQLi can occur are:
+
 <ul>
 <li>In SELECT statements, within the table or column name.</li>
  <li>In SELECT statements, within the ORDER BY clause.</li>
@@ -31,10 +40,4 @@ There are cases where the application takes the user's input and store it for a 
 This is usually done by storing the input into a database, no vulnerability arises at the point where the data is stored. The stored SQLi vulnerabilities are hard to be detected through interactive analysis.
 
 Many are thinking that today frameworks can resolve all the SQLi injection vulnerabilities, but this is wrong. Many are using SQL query and connections with the databases in a wrong manner. In what will follow, I will present some examples of how to detect SQLi in Java code and how to correctly write it.
-    
-## Contents
-* [Java Persistence API (JPA)](#jpa)
-* [Hibernate](#hibernate)
-* [PreparedStatement](#preparedstatement)
-* [CallableStatement](#callablestatement)
-* [MyBatis](#mybatis)
+   
