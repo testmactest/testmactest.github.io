@@ -15,6 +15,7 @@ Why do we need code review when we can interact with the target and finding if i
 * [PreparedStatement](#preparedstatement)
 * [CallableStatement](#callablestatement)
 * [MyBatis](#mybatis)
+* [Conclusion](#conclusion)
 
 ## Introduction {#introduction}
 
@@ -42,3 +43,54 @@ This is usually done by storing the input into a database, no vulnerability aris
 
 Many are thinking that today frameworks can resolve all the SQLi injection vulnerabilities, but this is wrong. Many are using SQL query and connections with the databases in a wrong manner. In what will follow, I will present some examples of how to detect SQLi in Java code and how to correctly write it.
    
+## Java Persistence API (JPA) {#jpa}
+<b>1. Vulnerable usage of JPA </b>
+
+{% highlight java %}
+List sql_result = EntityManager.createNativeQuery("Select * from PcComponents where component = " + component).GetResultList()
+List sql_result = entityManager.createQuery("Select age from Persons order where age.id = " + age.id).getResultList();
+int sql_result = entityManager.createNativeQuery("Delete from Persons where CNP = " + CNP).executeUpdate();
+
+{% endhighlight %}
+
+I consider that component, age.id & CNP are user input. As you can see in the above examples, they have not been validated or escaped as required. Therefore, it leaves the above queries vulnerable to SQLi attacks.
+
+<b>2. Secure usage of JPA </b><br/>
+Native SQL
+
+{% highlight java %}
+Query sqlQuery = entityManager.createNativeQuery("Select * from Books where author = ?", Book.class);
+List results = sqlQuery.setParameter(1, "Charles Dickens").getResultList();
+
+{% endhighlight %}
+
+Positional parameter in JPQL
+{% highlight java %}
+Query jpqlQuery = entityManager.createQuery("Select emp from Employees emp where emp.incentive > :incentive");
+List results = jpqlQuery.setParameter("incentive", new Long(10000)).getResultList();
+
+{% endhighlight %}
+
+Named parameter in JPQL
+{% highlight java %}
+Query jpqlQuery = entityManager.createQuery("Select emp from Employees emp where emp.incentive > :incentive");
+List results = jpqlQuery.setParameter("incentive", new Long(10000)).getResultList();
+
+{% endhighlight %}
+
+Named query in JPQL - Query named "myCart" being "Select c from Cart c where c.itemId = :itemId" */
+{% highlight java %}
+Query jpqlQuery = entityManager.createNamedQuery("myCart");
+List results = jpqlQuery.setParameter("itemId", "item-id-0001").getResultList();
+
+{% endhighlight %}
+
+
+
+f your JPA provider processes all input arguments to handle injection attacks then you should be covered. We do thin in EclipseLink.
+
+As the previous poster mentioned piecing together your own JPQL or SQL (for native queries) could expose you.
+
+I would recommend using named queries with parameters over concatenating strings to build JPQL/SQL.
+
+Doug
